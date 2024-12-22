@@ -23,7 +23,7 @@ class ProductsService {
   }
 
   create(product) {
-    const newProduct = { id: chance.guid(), ...product };
+    const newProduct = { id: chance.guid(), ...product }; // ... corresponden al spread operation para concatenar esos valores
     this.products.push(newProduct);
     return newProduct;
   }
@@ -41,9 +41,12 @@ class ProductsService {
     if (productIndex === -1) {
       throw new Error('Product not found');
     }
-    const updatedProduct = { ...this.products[productIndex], ...changes };
-    this.products[productIndex] = updatedProduct;
-    return updatedProduct;
+    const product = this.products[index];
+    this.products[index] = {
+      ...product,
+      ...changes
+    };
+    return this.products[index];
   }
 
   delete(id) {

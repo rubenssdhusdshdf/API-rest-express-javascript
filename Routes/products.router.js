@@ -29,33 +29,25 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const { name, price, category } = req.body;
-  if (!name || !price || !category) {
-    return res.status(400).json({ message: 'Missing required fields: name, price, or category' });
-  }
-  const newProduct = service.create(req.body);
+  const body = req.body;
+  const newProduct = service.create(body);
   res.status(201).json(newProduct);
 });
 
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const body = req.body;
-  try {
-    const updatedProduct = service.update(id, body);
-    res.json(updatedProduct);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
+  const product = service.update(id, body);
+ res.json(product)
 });
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  try {
-    const deletedProduct = service.delete(id);
-    res.json(deletedProduct);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
+  const product = service.delete(id);
+  res.json({
+    message: 'deleted',
+    id,
+  });
 });
 
 module.exports = router;
